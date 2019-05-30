@@ -13,12 +13,11 @@ const products = [
     {id: 12, title: 'Chair', price: 165},
 ];
 
-const renderProduct = (title = 'No title specified', price = 'Price not specified') =>
-`<div class="products__item">
-    <h3>${title}</h3>
-    <span class="price">${price}</span>
-    <button class="buy-btn btn">Купить</button>
-</div>`;
+const renderProduct = (title = 'No title specified', price = 'Price not specified') =>`<div class="products__item">
+                                                                                            <h3>${title}</h3>
+                                                                                            <span class="price">${price}</span>
+                                                                                            <button class="buy-btn btn">Купить</button>
+                                                                                       </div>`;
 
 const renderPage = list => {
     const productsList = list.map(item => renderProduct(item.title, item.price)).join('');
