@@ -14,7 +14,7 @@ const products = [
 ];
 
 const renderProduct = (title = 'No title specified', price = 'Price not specified') =>`<div class="products__item">
-                                                                                            <h3>${title}</h3>
+                                                                                       <h3 class="item__title">${title}</h3>
                                                                                             <span class="price">${price}</span>
                                                                                             <button class="buy-btn btn">Купить</button>
                                                                                        </div>`;

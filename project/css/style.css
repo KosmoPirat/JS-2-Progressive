@@ -1,6 +1,7 @@
 body{
     margin: 0;
 }
+
 .header {
     background: rgba(0,0,0,0.5);
     padding: 20px 30px 20px 30px;
@@ -75,4 +76,31 @@ body{
 
 .header__btn-cart:active {
     background-color: #ffffff;
+}
+
+@media screen and (max-width: 425px) {
+    .products__item {
+        width: 410px;
+    }
+
+    .price {
+        font-size: 25px;
+        font-weight: normal;
+    }
+
+    .item__title {
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+
+    .buy-btn {
+        font-size: 20px;
+        padding: 10px 10px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .products__item {
+        width: 305px;
+    }
 }
