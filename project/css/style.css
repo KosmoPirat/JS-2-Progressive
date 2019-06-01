@@ -1,5 +1,6 @@
 body{
     margin: 0;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
 .header {
@@ -7,7 +8,14 @@ body{
     padding: 20px 30px 20px 30px;
     max-width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+}
+
+.logo {
+    padding: 10px 20px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
 }
 
 .products {
@@ -31,9 +39,21 @@ body{
     margin-bottom: 30px;
 }
 
-.price {
+.item__title {
+    margin-bottom: 0;
+}
+
+.price-wrap {
+    display: block;
+    font-style: italic;
+    font-size: 12px;
     padding: 10px 0;
+}
+
+.price {
     font-weight: bold;
+    font-style: normal;
+    font-size: 16px;
 }
 
 .btn {
@@ -45,7 +65,7 @@ body{
 .buy-btn {
     background-color: #666666;
     color: white;
-    padding: 5px 10px;
+    padding: 5px 35px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 10px;
@@ -83,6 +103,10 @@ body{
         width: 410px;
     }
 
+    .price-wrap {
+        padding: 15px 0;
+    }
+
     .price {
         font-size: 25px;
         font-weight: normal;
@@ -90,12 +114,12 @@ body{
 
     .item__title {
         font-size: 30px;
-        margin-bottom: 10px;
     }
 
     .buy-btn {
         font-size: 20px;
-        padding: 10px 10px;
+        padding: 10px 30px 10px 30px;
+        margin-bottom: 10px;
     }
 }
 
