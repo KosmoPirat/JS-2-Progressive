@@ -8,6 +8,7 @@ class ProductsList {
     init(){
         this._fetchProducts();
         this._render();
+        this._getProductsSum();
     }
     _fetchProducts(){
         this.data = [
@@ -25,6 +26,13 @@ class ProductsList {
             this.productsAll.push(prod);
             block.insertAdjacentHTML('beforeend', prod.render());
         }
+    }
+    _getProductsSum() {
+        let productSum = 0;
+        for (let i = 0; i < this.productsAll.length; i++) {
+            productSum += this.productsAll[i].price;
+        }
+        console.log(productSum);
     }
 }
 
