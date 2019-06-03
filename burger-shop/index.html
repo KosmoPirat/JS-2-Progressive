@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/style.css">
+	<title>Burger-Shop</title>
+</head>
+<body>
+	<header class="title">
+		<h1 class="title__content">Creat your burger!</h1>
+	</header>
+	<main class="container">
+
+		<section class="burger-options">
+			<div class="size-option">
+				<h3 class="size-option__title">Choose size of your burger.</h3>
+				<select id='select-size'>
+					<option value="big">big</option>
+					<option value="small">small</option>
+				</select>
+			</div>
+
+			<div class="topping-option">
+				<h3 class="topping-option__title">Choose topping to your burger.</h3>
+				<select id='select-topping'>
+					<option value="cheese">cheese</option>
+					<option value="salat">salat</option>
+					<option value="patatoes">patatoes</option>
+				</select>
+			</div>
+
+			<div class="additive-option">
+				<h3 class="additive-option__title">Add additive if you want.</h3>
+				<span class="sauce-additive"><input type="checkbox" value="sauce"> Add sauce</span>
+				<span class="spice-additive"><input type="checkbox" value="spice"> Add spice</span>
+			</div>
+			
+			<button class="create-burger">Create your burger!</button>
+
+			<div class="burger-information">
+				
+			</div>
+
+		</section>
+
+	</main>
+	<script src="js/main.js"></script>
+</body>
+</html>
