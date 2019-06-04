@@ -60,10 +60,58 @@ class ProductItem {
 }
 
 class Cart {
-    constructor(){
-        // this.some // какое-то свойство
+    constructor(container = '.header__btn-cart') {
+
+        this.cartList = [];
+        this.container = container
+        this.init();
+
     }
-    calc(){} // метод что-то делает
+
+    init() {
+
+    }
+
+    _addCartItem(item) {
+
+    }
+
+    _delCartItem(item) {
+
+    }
+
+    _getTotalCount() {
+
+    }
+
+    _getCartSum() {
+
+    }
+
+    _render() {
+        
+    }
+}
+
+class CartItem {
+    constructor(product) {
+        this.title = product.title;
+        this.price = product.price;
+        this.id = product.id;
+        this.img = product.img
+    }
+    render() {
+        return `<div class="products__item">
+                  <img src="${this.img}" alt="${this.title}">
+                  <div class="desc">
+                      <h3 class='item__title'>${this.title}</h3>
+                      <span class='price-wrap'>
+                        Price: <span class="price">${this.price}</span>
+                      </span>
+                      <button class="buy-btn btn">Купить</button>
+                  </div>
+              </div>`;
+    }
 }
 
 const products = new ProductsList();
