@@ -74,6 +74,7 @@ body{
 
 .buy-btn:hover {
     background-color: #535353;
+    transition: 0.3s;
 }
 
 .buy-btn:active {
@@ -92,10 +93,100 @@ body{
 
 .header__btn-cart:hover {
     background-color: #dbdbdb;
+    transition: 0.3s;
 }
 
 .header__btn-cart:active {
     background-color: #ffffff;
+}
+
+.cart {
+    width: 380px;
+    position: absolute;
+    right: 30px;
+    top: 70px;
+    background: #ffff;
+    padding: 15px;
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+.cart__title {
+    text-align: center;
+    padding: 10px 0 20px 0;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.cart:before {
+    content: '';
+    position: absolute;
+    right: 30px;
+    top: -14px;
+    border: 7px solid transparent;	border-bottom: 7px solid #fff;
+}
+
+.cart-products__item {
+    display: flex;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.cart-desc {
+    padding-left: 10px;
+}
+
+.cart-item__title {
+    margin-bottom: 20px;
+}
+
+.cart-price-wrap {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.quantity {
+    display: block;
+}
+
+.cart-hidden {
+    visibility: hidden;
+}
+
+.close-btn {
+    position: absolute;
+    top: 19px;
+    right: 0;
+    width: 30px;
+    height: 25px;
+    background: url(../images/cancel.svg) no-repeat center;
+    background-size: 40%;
+    border: 1px solid #707070;
+    border-radius: 6px;
+}
+
+.close-btn:hover {
+    background: url(../images/cancel.svg) no-repeat center #b9b9b9;
+    background-size: 40%;
+    transition: 0.3s;
+}
+
+.close-btn:active {
+    background: url(../images/cancel.svg) no-repeat center #aaaaaa;
+    background-size: 40%;
+    border: 1px solid #aaaaaa;
+}
+
+.count {
+    padding: 2px 6px;
+    margin-right: 10px;
+    color: #fff;
+    background: #535353;
+    border-radius: 5px;
+}
+
+.count_hidden {
+    display: none;
 }
 
 @media screen and (max-width: 425px) {
