@@ -9,14 +9,56 @@
 <body>
     <header class="header">
         <div class="logo">E-shop</div>
+        <form action="#" method="post" class="search-form">
+            <input type="text" class="search-field">
+            <button class="btn-search" type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
         <button class="header__btn-cart btn" type="button"><span class="count count_hidden"></span>Корзина</button>
-        <div class="cart cart-hidden"></div>
+        <div class="cart cart_hidden">
+            <div class="cart__title"></div>
+        </div>
     </header>
     <main class="content">
         <div class="products">
 
         </div>
     </main>
+    <footer class="footer">
+        <div class="logo">E-shop</div>
+        <form action="#" method="post" class="feedback-form">
+            <div class="feedback-form__item feedback-title">Напишите нам!</div>
+                <div class="feedback-form__item item-wrap">
+                    <input id="name-input" type="text" name="name" placeholder="Enter name"
+                           class="feedback-input">
+                    <label for="name-input" class="feedback-form__err-text invisible"></label>
+                </div>
+
+                <div class="feedback-form__item item-wrap">
+                    <input id="phone-input" type="text" name="phone" placeholder="Enter phone: +7(xxx)xxx-xxx"
+                           class="feedback-input">
+                    <label for="phone-input" class="feedback-form__err-text invisible"></label>
+                </div>
+
+                <div class="feedback-form__item item-wrap">
+                    <input id="mail-input" type="text" name="mail" placeholder="Enter mail: yourmail@mail.ru"
+                           class="feedback-input">
+                    <label for="mail-input" class="feedback-form__err-text invisible"></label>
+                </div>
+
+            <div class="feedback-form__item item-wrap">
+            <textarea id="text-input" name="text" placeholder="Enter message"
+                      class="feedback-textarea"></textarea>
+                <label for="text-input" class="feedback-form__err-text invisible"></label>
+            </div>
+            <button class="feedback-form__submit btn" type="submit">
+                Отправить
+            </button>
+        </form>
+    </footer>
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
     <script src="js/main.js"></script>
+    <script src="js/validation.js"></script>
 </body>
 </html>

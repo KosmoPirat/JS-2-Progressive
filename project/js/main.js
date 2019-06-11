@@ -16,55 +16,66 @@ const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-a
  //    });
  // };
 
-class ProductsList {
-    constructor(container = '.products'){
-        this.data = [];
+class List {
+    constructor(url, container){
         this.container = container;
-        this.productsAll = [];
-        this._getProducts()
-            .then(() => {
-                this._render()
-            });
+        this.url = url;
+        this.data = [];
+        this.allProducts = [];
+        this.filtered = [];
+        this._init();
     }
 
-    _getProducts() {
-        return fetch(`${API}/catalogData.json`)
+    getJson(url) {
+        return fetch(url ? url : `${API + this.url}`)
             .then(result => result.json())
-            .then(data => {
-                this.data = [...data];
-            })
             .catch(error => console.log(error));
     }
-
-    _render() {
+    handleData(data) {
+        this.data = [...data];
+        this.render();
+    }
+    getItemSum() {
+        return this.allProducts.reduce((sum, item) => sum += item.price, 0);
+    }
+    getItem(id) {
+        return this.allProducts.find(el => el.id_product === id);
+    }
+    render() {
         const block = document.querySelector(this.container);
-        for (let product of this.data){
-            const prod = new ProductItem(product);
-            this.productsAll.push(prod);
+        for (let product of this.data) {
+            const prod = new lists[this.constructor.name](product);
+            this.allProducts.push(prod);
             block.insertAdjacentHTML('beforeend', prod.render());
         }
     }
-
-    _getProductsSum() {
-        let productSum = 0;
-        for (let product of this.productsAll) {
-            productSum += product.price;
-        }
-        return productSum;
+    filter(value) {
+        const regexp = new RegExp(value, 'i');
+        this.filtered = this.allProducts.filter(el => regexp.test(el.product_name));
+        this.allProducts.forEach(el => {
+            const block = document.querySelector(`.products__item[data-id="${el.id_product}"]`);
+            if (this.filtered.includes(el)) {
+                block.classList.remove('invisible')
+            } else {
+                block.classList.add('invisible')
+            }
+        });
+    }
+    _init() {
+        return false;
     }
 }
 
-
-class ProductItem {
-    constructor(product, img = `https://placehold.it/200x150`) {
-        this.product_name = product.product_name;
-        this.price = product.price;
-        this.id_product = product.id_product;
+class Item {
+    constructor(el, img = `https://placehold.it/200x150`) {
+        this.product_name = el.product_name;
+        this.price = el.price;
+        this.id_product = el.id_product;
         this.img = img
     }
 
     render() {
-        return `<div class="products__item">
+        return `<div class="products__item" data-id="${this.id_product}">
                   <img src="${this.img}" alt="${this.product_name}">
                   <div class="desc">
                       <h3 class='item__title'>${this.product_name}</h3>
@@ -77,120 +88,144 @@ class ProductItem {
     }
 }
 
-class Cart {
-    constructor(container = '.cart') {
+class ProductsList extends List{
+    constructor(cart, url = '/catalogData.json', container = '.products'){
+        super (url, container);
+        this.cart = cart;
+        this.getJson()
+            .then(data => this.handleData(data));
+    }
 
-        this.cartList = [];
-        this.amount = 0;
-        this.countGoods = 0;
-        this.container = container;
-        this._getCartProducts()
-            .then(() => {
-                this._render()
+    _init() {
+        document.querySelector(this.container).addEventListener('click', el => {
+            if (el.target.classList.contains('buy-btn')) {
+                let id = +el.target.dataset.id;
+                this.cart.addCartItem(this.getItem(id));
+            }
+        });
+
+        document.querySelector('.search-form').addEventListener('submit', e => {
+            e.preventDefault();
+            this.filter(document.querySelector('.search-field').value);
+        });
+    }
+}
+
+class ProductItem extends Item {}
+
+class Cart extends List{
+    constructor(url = '/getBasket.json', container = '.cart') {
+        super(url, container);
+        this.getJson()
+            .then(data => this.handleData(data.contents));
+    }
+
+    addCartItem(item) {
+        this.getJson(`${API}/addToBasket.json`)
+            .then(data => {
+                if (data.result) {
+                    let findProd = this.allProducts.find(el => el.id_product === item.id_product);
+                    if (findProd) {
+                        findProd.quantity++;
+                        this._updateCart(findProd);
+                    } else {
+                        const newProd = Object.assign({quantity: 1}, item);
+                        this.data = [newProd];
+                        this.render();
+                        this._renderCount();
+                        this._renderCartData();
+                    }
+                } else {
+                    console.log('Error: can\'t add product');
+                }
+            });
+
+    }
+
+
+    delCartItem(el) {
+        this.getJson(`${API}/deleteFromBasket.json`)
+            .then(data => {
+                if (data.result) {
+                    let id = +el.dataset.id;
+                    let findProd = this.allProducts.find(item => item.id_product === id);
+                    if (findProd.quantity > 1) {
+                        findProd.quantity--;
+                        this._updateCart(findProd);
+                    } else {
+                        this.allProducts.splice(this.allProducts.indexOf(findProd), 1);
+                        document.querySelector(`.cart-products__item[data-id="${id}"]`).remove();
+                        this._renderCount();
+                        this._renderCartData();
+                    }
+                } else {
+                    console.log('Error: can\'t delete product');
+                }
             });
     }
 
-    _getCartProducts() {
-        return fetch(`${API}/getBasket.json`)
-            .then(result => result.json())
-            .then(data => {
-                this.amount = data.amount;
-                this.countGoods = data.countGoods;
-                this.data = [...data.contents];
-                this.cartList = [...data.contents];
-            })
-            .catch(error => console.log(error));
+    _updateCart(item) {
+        const block = document.querySelector(`.cart-products__item[data-id="${item.id_product}"]`);
+        block.querySelector('.quantity').textContent = `Кол-во: ${item.quantity}`;
+        this._renderCount();
+        this._renderCartData();
     }
 
-    addCartItem(id) {
-        fetch(`${API}/addToBasket.json`)
-            .then(result => result.json())
-            .then(data => {
-                if (data.result === 1) {
-                    const choseProd = products.productsAll.find(item => item.id_product === id);
-                    if (this.data.find(item => item.id_product === choseProd.id_product)) {
-                        this.data.find(item => item.id_product === choseProd.id_product).quantity++;
-                    } else {
-                        choseProd.quantity = 1;
-                        this.data.push(choseProd);
-                        this.cartList.push(choseProd);
-                    }
-                    this._render();
-                }
-            })
-            .catch(error => console.log(error));
-    }
-
-    delCartItem(id) {
-        fetch(`${API}/deleteFromBasket.json`)
-            .then(result => result.json())
-            .then(data => {
-                if (data.result === 1) {
-                    if (this.data.find(item => item.id_product === id) && this.data.find(item => item.id_product === id).quantity > 1) {
-                        this.data.find(item => item.id_product === id).quantity--;
-                    } else {
-                        this.data.splice(this.data.findIndex(item => item.id_product === id),1);
-                        this.cartList.splice(this.cartList.findIndex(item => item.id_product === id),1);
-                    }
-                    if (this.cartList.length === 0) {
-                        const block = document.querySelector(this.container);
-                        document.querySelector('.count').classList.add('count_hidden');
-                        block.innerHTML = 'Корзина пуста';
-                    } else {
-                        this._render();
-                    }
-                }
-            })
-            .catch(error => console.log(error));
+    _init() {
+        document.querySelector(this.container).addEventListener('click', el => {
+            if (el.target.classList.contains('close-btn')) {
+                this.delCartItem(el.target);
+            }
+        });
+        document.querySelector('.header__btn-cart').addEventListener('click', () => {
+            document.querySelector('.cart').classList.toggle('cart_hidden');
+        });
     }
 
     _getTotalCount() {
         let productCount = 0;
-        for (let product of this.cartList) {
+        for (let product of this.allProducts) {
             productCount += product.quantity;
         }
         return productCount;
     }
 
     _getCartSum() {
-            let productSum = 0;
-            for (let product of this.cartList) {
-                productSum += product.price * product.quantity;
-            }
-            return productSum;
+        let productSum = 0;
+        for (let product of this.allProducts) {
+            productSum += product.price * product.quantity;
+        }
+        return productSum;
     }
 
-    renderCount() {
+    _renderCartData() {
+        const cartData = document.querySelector('.cart__title');
+        if (this._getCartSum() > 0) {
+            cartData.classList.remove('cart__title_hidden');
+        } else {
+            cartData.classList.add('cart__title_hidden');
+        }
+        cartData.innerHTML = `Сумма вашей покупки: ${this._getCartSum()} <br\> Общее кол-во товаров в корзине: ${this._getTotalCount()}`;
+    }
+
+    _renderCount() {
         const count = document.querySelector('.count');
         if (this._getTotalCount() > 0) {
             count.classList.remove('count_hidden');
+        } else {
+            count.classList.add('count_hidden');
         }
         count.innerHTML = this._getTotalCount();
     }
-
-    _render() {
-        const block = document.querySelector(this.container);
-        block.innerHTML = `<div class="cart__title">
-                                Сумма товаров: ${this._getCartSum()},  Кол-во товаров: ${this._getTotalCount()}
-                           </div>`;
-        this.renderCount();
-        for (let product of this.data){
-            const prod = new CartItem(product);
-            block.insertAdjacentHTML('beforeend', prod.render());
-        }
-    }
 }
 
-class CartItem {
-    constructor(product, img = 'https://placehold.it/200x150') {
-        this.product_name = product.product_name;
-        this.price = product.price;
-        this.id_product = product.id_product;
-        this.img = img;
-        this.quantity = product.quantity;
+class CartItem extends Item{
+    constructor(el, img = 'https://placehold.it/150x150') {
+        super(el, img);
+        this.quantity = el.quantity;
     }
     render() {
-        return `<div class="cart-products__item">
+        return `<div class="cart-products__item" data-id="${this.id_product}">
                   <img src="${this.img}" alt="${this.product_name}">
                   <div class="cart-desc">
                       <h3 class='cart-item__title'>${this.product_name}</h3>
@@ -203,29 +238,11 @@ class CartItem {
               </div>`;
     }
 }
-
-const products = new ProductsList();
+const lists = {
+    ProductsList: ProductItem,
+    Cart: CartItem,
+};
 const cart = new Cart();
+const products = new ProductsList(cart);
+products.getJson('getProducts.json').then(data => products.handleData(data));
 
-const cartBtn = document.querySelector('.header__btn-cart');
-const cartBlock = document.querySelector('.cart');
-cartBtn.addEventListener('click', () => {
-    cartBlock.classList.toggle('cart-hidden');
-});
-
-cartBlock.addEventListener('click', el => {
-    const target = el.target;
-    if (target.classList.contains('close-btn')) {
-        cart.delCartItem(+target.dataset.id);
-    }
-});
-
-const prodList = document.querySelector('.products');
-const count = document.querySelector('.count');
-prodList.addEventListener('click', el => {
-    const target = el.target;
-    if (target.classList.contains('buy-btn')) {
-        cart.addCartItem(+target.dataset.id);
-        count.classList.remove('count_hidden');
-    }
-});
