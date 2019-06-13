@@ -7,45 +7,73 @@
     <title>Shop</title>
 </head>
 <body>
+<div id="app" class="vue-container">
     <header class="header">
         <div class="logo">E-shop</div>
         <form action="#" method="post" class="search-form">
-            <input type="text" class="search-field">
-            <button class="btn-search" type="submit">
+            <input type="text" class="search-field" v-model="searchLine">
+            <button class="btn-search" type="submit" @click.prevent="filter(searchLine)">
                 <i class="fas fa-search"></i>
             </button>
         </form>
-        <button class="header__btn-cart btn" type="button"><span class="count count_hidden"></span>Корзина</button>
-        <div class="cart cart_hidden">
-            <div class="cart__title"></div>
+        <button class="header__btn-cart btn" type="button" @click="isShow = !isShow"><span class="count" v-if="getTotalCount">{{
+            getTotalCount }}</span>Корзина
+        </button>
+        <div class="cart" v-show="isShow">
+            <div class="cart__title" v-if="getTotalCount">
+                Сумма вашей покупки: {{ getCartSum }} <br> Общее кол-во товаров в корзине: {{getTotalCount }}
+            </div>
+            <div class="cart__title" v-else>Корзина пуста!</div>
+            <div class="cart-products__item" v-for="product of cartProducts"
+                 :key="product.id_product">
+                <img :src="imgCatalog" :alt="product.product_name">
+                <div class="cart-desc">
+                    <h3 class='cart-item__title'>{{ product.product_name }}</h3>
+                    <span class='cart-price-wrap'>
+                        Цена: <span class="cart-price">{{ product.price }}</span> за шт.
+                      </span>
+                    <span class="quantity">Кол-во: {{ product.quantity }}</span>
+                    <button class="close-btn btn" @click="removeProduct(product)"></button>
+                </div>
+            </div>
         </div>
     </header>
     <main class="content">
         <div class="products">
-
+            <div class="products__item" v-for="product of filter"
+                 :key="product.id_product">
+                <img :src="imgCatalog" :alt="product.product_name">
+                <div class="desc">
+                    <h3 class='item__title'>{{ product.product_name }}</h3>
+                    <span class='price-wrap'>
+                        Цена: <span class="price">{{ product.price }}</span>
+                      </span>
+                    <button class="buy-btn btn" @click="addProduct(product)">Купить</button>
+                </div>
+            </div>
         </div>
     </main>
     <footer class="footer">
         <div class="logo">E-shop</div>
         <form action="#" method="post" class="feedback-form">
             <div class="feedback-form__item feedback-title">Напишите нам!</div>
-                <div class="feedback-form__item item-wrap">
-                    <input id="name-input" type="text" name="name" placeholder="Enter name"
-                           class="feedback-input">
-                    <label for="name-input" class="feedback-form__err-text invisible"></label>
-                </div>
+            <div class="feedback-form__item item-wrap">
+                <input id="name-input" type="text" name="name" placeholder="Enter name"
+                       class="feedback-input">
+                <label for="name-input" class="feedback-form__err-text invisible"></label>
+            </div>
 
-                <div class="feedback-form__item item-wrap">
-                    <input id="phone-input" type="text" name="phone" placeholder="Enter phone: +7(xxx)xxx-xxx"
-                           class="feedback-input">
-                    <label for="phone-input" class="feedback-form__err-text invisible"></label>
-                </div>
+            <div class="feedback-form__item item-wrap">
+                <input id="phone-input" type="text" name="phone" placeholder="Enter phone: +7(xxx)xxx-xxx"
+                       class="feedback-input">
+                <label for="phone-input" class="feedback-form__err-text invisible"></label>
+            </div>
 
-                <div class="feedback-form__item item-wrap">
-                    <input id="mail-input" type="text" name="mail" placeholder="Enter mail: yourmail@mail.ru"
-                           class="feedback-input">
-                    <label for="mail-input" class="feedback-form__err-text invisible"></label>
-                </div>
+            <div class="feedback-form__item item-wrap">
+                <input id="mail-input" type="text" name="mail" placeholder="Enter mail: yourmail@mail.ru"
+                       class="feedback-input">
+                <label for="mail-input" class="feedback-form__err-text invisible"></label>
+            </div>
 
             <div class="feedback-form__item item-wrap">
             <textarea id="text-input" name="text" placeholder="Enter message"
@@ -57,8 +85,10 @@
             </button>
         </form>
     </footer>
-    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
-    <script src="js/main.js"></script>
-    <script src="js/validation.js"></script>
+</div>
+<script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/main.js"></script>
+<script src="js/validation.js"></script>
 </body>
 </html>
