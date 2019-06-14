@@ -55,30 +55,33 @@
     </main>
     <footer class="footer">
         <div class="logo">E-shop</div>
-        <form action="#" method="post" class="feedback-form">
+        <form id="fb-form" action="#" method="post" class="feedback-form">
             <div class="feedback-form__item feedback-title">Напишите нам!</div>
             <div class="feedback-form__item item-wrap">
-                <input id="name-input" type="text" name="name" placeholder="Enter name"
-                       class="feedback-input">
-                <label for="name-input" class="feedback-form__err-text invisible"></label>
+                <label for="name-input" class="input-wrap">
+                    <input id="name-input" type="text" name="name" placeholder="Enter name"
+                           class="feedback-input">
+                </label>
             </div>
 
             <div class="feedback-form__item item-wrap">
-                <input id="phone-input" type="text" name="phone" placeholder="Enter phone: +7(xxx)xxx-xxx"
-                       class="feedback-input">
-                <label for="phone-input" class="feedback-form__err-text invisible"></label>
+                <label for="phone-input" class="input-wrap">
+                    <input id="phone-input" type="text" name="phone" placeholder="Enter phone: +7(xxx)xxx-xxx"
+                           class="feedback-input">
+                </label>
             </div>
 
             <div class="feedback-form__item item-wrap">
-                <input id="mail-input" type="text" name="mail" placeholder="Enter mail: yourmail@mail.ru"
-                       class="feedback-input">
-                <label for="mail-input" class="feedback-form__err-text invisible"></label>
+                <label for="mail-input" class="input-wrap">
+                    <input id="mail-input" type="text" name="email" placeholder="Enter mail: yourmail@mail.ru"
+                           class="feedback-input">
+                </label>
             </div>
 
             <div class="feedback-form__item item-wrap">
-            <textarea id="text-input" name="text" placeholder="Enter message"
-                      class="feedback-textarea"></textarea>
-                <label for="text-input" class="feedback-form__err-text invisible"></label>
+                <label for="text-input" class="input-wrap" >
+                    <textarea id="text-input" name="text" placeholder="Enter message" class="feedback-textarea"></textarea>
+                </label>
             </div>
             <button class="feedback-form__submit btn" type="submit">
                 Отправить
@@ -90,5 +93,15 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="js/main.js"></script>
 <script src="js/validation.js"></script>
+<script>
+    window.onload = () => {
+        document.getElementById('fb-form').addEventListener('submit', e => {
+            let valid = new Validator('fb-form');
+            if(!valid.valid) {
+                e.preventDefault();
+            }
+        })
+    }
+</script>
 </body>
 </html>

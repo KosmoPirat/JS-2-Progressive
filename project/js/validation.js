@@ -1,44 +1,66 @@
-document.querySelector('.feedback-form').addEventListener('submit', e => {
-    e.preventDefault();
-    const form = document.querySelector('.feedback-form');
-    const nameTest = /[a-zа-яё]+$/i;
-    const phoneTest = /\+7\(\d{3}\)\d{3}-\d{4}$/i;
-    const mailTest = /[a-z0-9\.\-]+@mail.ru$/i;
+class Validator {
+    constructor(form) {
+        this.patterns = {
+            name: /^[a-zа-яё]+$/i,
+            phone: /^\+7\(\d{3}\)\d{3}-\d{4}$/,
+            email: /^[\w._-]+@\w+\.[a-z]{2,4}$/i,
 
-    if (!nameTest.test(`${form.querySelector('#name-input').value}`) || form.querySelector('#name-input').value === '') {
-        form.querySelector('[for="name-input"]').classList.remove('invisible');
-        form.querySelector('#name-input').style.border = '2px solid darkred';
-        form.querySelector('[for="name-input"]').textContent = 'Имя должно содержать только буквы.';
-    } else {
-        form.querySelector('[for="name-input"]').classList.add('invisible');
-        form.querySelector('#name-input').style.border = '';
-    }
+        };
+        this.errors = {
+            name: 'Имя содержит только буквы',
+            phone: 'Телефон подчиняется шаблону +7(000)000-0000',
+            email: 'E-mail выглядит как mymail@mail.ru, или my.mail@mail.ru, или my-mail@mail.ru',
 
-    if (!phoneTest.test(`${form.querySelector('#phone-input').value}`)) {
-        form.querySelector('[for="phone-input"]').classList.remove('invisible');
-        form.querySelector('#phone-input').style.border = '2px solid darkred';
-        form.querySelector('[for="phone-input"]').textContent = 'Номер телефона должен быть следующего вида:' +
-            ' +7(xxx)xxx-xxxx';
-    } else {
-        form.querySelector('[for="phone-input"]').classList.add('invisible');
-        form.querySelector('#phone-input').style.border = '';
-    }
+        };
+        this.errorClass = 'error-msg';
+        this.form = form;
+        this.valid = false;
+        this._validateForm();
 
-    if (!mailTest.test(`${form.querySelector('#mail-input').value}`)) {
-        form.querySelector('[for="mail-input"]').classList.remove('invisible');
-        form.querySelector('#mail-input').style.border = '2px solid darkred';
-        form.querySelector('[for="mail-input"]').textContent = 'email должен быть следующего вида: yourmail@mail.ru';
-    } else {
-        form.querySelector('[for="mail-input"]').classList.add('invisible');
-        form.querySelector('#mail-input').style.border = '';
     }
+    _validateForm(){
+        let errors = [...document.getElementById(this.form).querySelectorAll(`.${this.errorClass}`)];
+        for(let error of errors){
+            error.remove();
+        }
+        let formFields = [...document.getElementById(this.form).getElementsByTagName('input')];
+        for(let field of formFields){
+            this._validate(field);
+        }
+        if(![...document.getElementById(this.form).querySelectorAll('.invalid')].length){
+            this.valid = true;
+        }
 
-    if (form.querySelector('#text-input').value === '') {
-        form.querySelector('[for="text-input"]').classList.remove('invisible');
-        form.querySelector('#text-input').style.border = '2px solid darkred';
-        form.querySelector('[for="text-input"]').textContent = 'Введите сообщение.';
-    } else {
-        form.querySelector('[for="text-input"]').classList.add('invisible');
-        form.querySelector('#text-input').style.border = '';
     }
-});
+    _validate(field){
+        if(this.patterns[field.name]){
+            if(!this.patterns[field.name].test(field.value)){
+                field.classList.add('invalid');
+                this._addErrorMsg(field);
+                this._watchField(field);
+            }
+        }
+    }
+    _addErrorMsg(field){
+        let error = `<div class="${this.errorClass}">${this.errors[field.name]}</div>`;
+        field.parentNode.insertAdjacentHTML('beforeend', error);
+    }
+    _watchField(field){
+        field.addEventListener('input', () => {
+            let error = field.parentNode.querySelector(`.${this.errorClass}`);
+            if(this.patterns[field.name].test(field.value)){
+                field.classList.remove('invalid');
+                field.classList.add('valid');
+                if(error){
+                    error.remove()
+                }
+            } else {
+                field.classList.remove('valid');
+                field.classList.add('invalid');
+                if(!error){
+                    this._addErrorMsg(field);
+                }
+            }
+        })
+    }
+}
