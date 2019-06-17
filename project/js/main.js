@@ -1,4 +1,27 @@
 const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+
+const app = new Vue({
+    el: '#app',
+    data: {
+        statusOk: true,
+
+    },
+    methods: {
+        getJson(url) {
+            return fetch(url)
+                .then(result => {
+                    if(!result.ok) {
+                        this.statusOk = false;
+                    }
+                    console.log(this.statusOk);
+                    return result.json()
+                })
+                .catch(error => console.log('There has been a problem with your fetch operation: ' + error.message));
+        },
+    },
+
+});
+
 // let getRequest = (url, cb) => {
 //    return new Promise((resolve, reject) => {
 //        let xhr = new XMLHttpRequest();
@@ -15,96 +38,6 @@ const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-a
 //        }
 //    });
 // };
-
-const app = new Vue({
-    el: '#app',
-    data: {
-        isShow: false,
-        catalogUrl: `/catalogData.json`,
-        products: [],
-        cartProducts: [],
-        imgCatalog: `https://placehold.it/200x150`,
-        searchLine: '',
-        isInvisible: true,
-
-    },
-    methods: {
-        getJson(url){
-            return fetch(url)
-                .then(result => result.json())
-                .catch(error => console.log(error))
-        },
-        addProduct(product){
-            if (product) {
-                let findProd = this.cartProducts.find(el => el.id_product === product.id_product);
-                if (findProd) {
-                    findProd.quantity++;
-                } else {
-                    const newProd = Object.assign({quantity: 1}, product);
-                    this.cartProducts.push(newProd);
-
-                }
-            } else {
-                console.log('Error: can\'t add product');
-            }
-        },
-        removeProduct(product) {
-            if (product) {
-                let findProd = this.cartProducts.find(el => el.id_product === product.id_product);
-                if (findProd.quantity > 1) {
-                    findProd.quantity--;
-                } else {
-                    this.cartProducts.splice(this.cartProducts.indexOf(findProd), 1);
-                }
-            } else {
-                console.log('Error: can\'t add product');
-            }
-        },
-
-    },
-    mounted(){
-        this.getJson(`${API + this.catalogUrl}`)
-            .then(data => {
-                for(let el of data){
-                    this.products.push(el)
-                }
-            });
-        this.getJson(`getProducts.json`)
-            .then(data => {
-                for(let el of data){
-                    this.products.push(el)
-                }
-            });
-        this.getJson(`${API}/getBasket.json`)
-            .then(data => {
-                for(let el of data.contents){
-                    this.cartProducts.push(el)
-                }
-            });
-    },
-    computed: {
-        getTotalCount() {
-            let productCount = 0;
-            for (let product of this.cartProducts) {
-                productCount += product.quantity;
-            }
-            return productCount;
-        },
-        getCartSum() {
-            let productSum = 0;
-            for (let product of this.cartProducts) {
-                productSum += product.price * product.quantity;
-            }
-            return productSum;
-        },
-        filter() {
-            const regexp = new RegExp(this.searchLine, 'i');
-            return this.products.filter(el => regexp.test(el.product_name));
-        },
-
-    },
-
-});
 
 /*class List {
     constructor(url, container){
