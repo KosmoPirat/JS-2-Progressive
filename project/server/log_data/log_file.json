@@ -1,142 +1,65 @@
 [
     {
-        "data": "June 21, 2019 3:09 PM",
-        "action": "change",
+        "data": "June 21, 2019 4:56 PM",
+        "action": "del",
         "content": {
-            "id_product": 456,
-            "product_name": "Мышка",
-            "price": 1000,
-            "quantity": 1
+            "id": "456",
+            "name": "Мышка",
+            "quantity": 0
         }
     },
     {
-        "data": "June 21, 2019 3:10 PM",
+        "data": "June 21, 2019 4:56 PM",
         "action": "add",
         "content": {
-            "quantity": 1,
-            "id_product": 124,
-            "product_name": "Keyboard",
-            "price": 1600
-        }
-    },
-    {
-        "data": "June 21, 2019 3:14 PM",
-        "action": "change",
-        "content": {
-            "quantity": 1,
-            "id_product": 124,
-            "product_name": "Keyboard",
-            "price": 1600
-        }
-    },
-    {
-        "data": "June 21, 2019 3:14 PM",
-        "action": "change",
-        "content": {
-            "quantity": 2,
-            "id_product": 124,
-            "product_name": "Keyboard",
-            "price": 1600
-        }
-    },
-    {
-        "data": "June 21, 2019 3:14 PM",
-        "action": "change",
-        "content": {
-            "quantity": 3,
-            "id_product": 124,
-            "product_name": "Keyboard",
-            "price": 1600
-        }
-    },
-    {
-        "data": "June 21, 2019 3:14 PM",
-        "action": "change",
-        "content": {
-            "id_product": 123,
-            "product_name": "Ноутбук",
-            "price": 45600,
+            "id": 456,
+            "name": "Мышка",
             "quantity": 1
         }
     },
     {
-        "data": "June 21, 2019 3:15 PM",
-        "action": "change",
+        "data": "June 21, 2019 4:56 PM",
+        "action": "del",
         "content": {
-            "quantity": 1,
-            "id_product": 457,
-            "product_name": "Gamepad",
-            "price": 3000
+            "id": "456",
+            "name": "Мышка",
+            "quantity": 0
         }
     },
     {
-        "data": "June 21, 2019 3:16 PM",
-        "action": "change",
+        "data": "June 21, 2019 4:56 PM",
+        "action": "add",
         "content": {
-            "quantity": 4,
-            "id_product": 124,
-            "product_name": "Keyboard",
-            "price": 1600
+            "id": 123,
+            "name": "Ноутбук",
+            "quantity": 1
         }
     },
     {
-        "data": "June 21, 2019 3:19 PM",
+        "data": "June 21, 2019 4:56 PM",
+        "action": "add",
+        "content": {
+            "id": 457,
+            "name": "Gamepad",
+            "quantity": 1
+        }
+    },
+    {
+        "data": "June 21, 2019 4:56 PM",
         "action": "change",
         "content": {
-            "id_product": 123,
-            "product_name": "Ноутбук",
-            "price": 45600,
+            "id": 457,
+            "name": "Gamepad",
             "quantity": 2
         }
     },
     {
-        "data": "June 21, 2019 3:19 PM",
-        "action": "del",
-        "content": {
-            "id_product": 123,
-            "product_name": "Ноутбук",
-            "price": 45600,
-            "quantity": 1
-        }
-    },
-    {
-        "data": "June 21, 2019 3:20 PM",
-        "action": "add",
-        "content": {
-            "quantity": 1,
-            "id_product": 123,
-            "product_name": "Ноутбук",
-            "price": 45600
-        }
-    },
-    {
-        "data": "June 21, 2019 3:20 PM",
+        "data": "June 21, 2019 4:56 PM",
         "action": "change",
         "content": {
-            "quantity": 1,
-            "id_product": 123,
-            "product_name": "Ноутбук",
-            "price": 45600
-        }
-    },
-    {
-        "data": "June 21, 2019 3:21 PM",
-        "action": "change",
-        "content": {
-            "quantity": 2,
-            "id_product": 123,
-            "product_name": "Ноутбук",
-            "price": 45600
-        }
-    },
-    {
-        "data": "June 21, 2019 3:21 PM",
-        "action": "del",
-        "content": {
-            "quantity": 1,
-            "id_product": 123,
-            "product_name": "Ноутбук",
-            "price": 45600
+            "id": 457,
+            "name": "Gamepad",
+            "quantity": 3
         }
     }
 ]
