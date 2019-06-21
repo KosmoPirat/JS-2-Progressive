@@ -9,38 +9,44 @@ Vue.component('cart', {
     },
     methods: {
         addProduct(product){
-            this.$parent.getJson(`${API}/addToBasket.json`)
-                .then(data => {
-                    if(data.result){
-                        let find = this.cartItems.find(el => el.id_product === product.id_product);
-                        if(find){
-                            find.quantity++;
-                        } else {
-                            let prod = Object.assign({quantity: 1}, product);
+            let find = this.cartItems.find(el => el.id_product === product.id_product);
+            if(find){
+                this.$parent.putJson(`/api/cart/${find.id_product}`, {quantity: 1})
+                    .then(data => {
+                        if(data.result){
+                            find.quantity++
+                        }
+                    });
+            } else {
+                let prod = Object.assign({quantity: 1}, product);
+                this.$parent.postJson(`api/cart`, prod)
+                    .then(data => {
+                        if(data.result){
                             this.cartItems.push(prod);
                         }
-                    } else {
-                        console.log('error');
-                    }
-                })
+                    });
+            }
         },
         remove(product){
-            this.$parent.getJson(`${API}/deleteFromBasket.json`)
-                .then(data => {
-                    if(data.result){
-                        if(product.quantity > 1){
+            if(product.quantity > 1){
+                this.$parent.putJson(`/api/cart/${product.id_product}`, {quantity: -1})
+                    .then(data => {
+                        if(data.result){
                             product.quantity--;
-                        } else {
+                        }
+                    });
+            } else {
+                this.$parent.delJson(`/api/cart/${product.id_product}`, {id: product.id_product})
+                    .then(data => {
+                        if (data.result) {
                             this.cartItems.splice(this.cartItems.indexOf(product), 1);
                         }
-                    } else {
-                        console.log('error');
-                    }
-                })
+                    });
+            }
         },
     },
     mounted(){
-        this.$parent.getJson(`${API + this.cartUrl}`)
+        this.$parent.getJson(`/api/cart`)
             .then(data => {
                 for(let el of data.contents){
                     this.cartItems.push(el)

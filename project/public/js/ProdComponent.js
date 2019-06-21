@@ -14,20 +14,13 @@ Vue.component('products', {
         }
     },
     mounted(){
-        this.$parent.getJson(`${API + this.catalogUrl}`)
+        this.$parent.getJson(`/api/products`)
             .then(data => {
                 for(let el of data){
                     this.products.push(el);
                     this.filtered.push(el);
                 }
             });
-        this.$parent.getJson(`getProducts.json`)
-            .then(data => {
-                for(let el of data){
-                    this.products.push(el);
-                    this.filtered.push(el)
-                }
-            })
     },
     template: `<div class="products">
                     <product 

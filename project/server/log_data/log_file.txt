@@ -1,0 +1,20 @@
+
+
+June 21, 2019 12:39 PM: action: change, id: 456, name: Мышка, quantity: 4;
+June 21, 2019 12:39 PM: action: change, id: 456, name: Мышка, quantity: 3;
+June 21, 2019 12:39 PM: action: change, id: 456, name: Мышка, quantity: 2;
+June 21, 2019 12:39 PM: action: del, id: 456, name: Мышка, quantity: 1;
+June 21, 2019 12:39 PM: action: add, id: 456, name: Мышка, quantity: 1;
+June 21, 2019 12:41 PM: action: change, id: 457, name: Gamepad, quantity: 3;
+June 21, 2019 12:42 PM: action: add, id: 123, name: Ноутбук, quantity: 1;
+June 21, 2019 12:42 PM: action: del, id: 123, name: Ноутбук, quantity: 1;
+June 21, 2019 12:42 PM: action: del, id: 456, name: Мышка, quantity: 1;
+June 21, 2019 12:42 PM: action: change, id: 457, name: Gamepad, quantity: 4;
+June 21, 2019 12:42 PM: action: change, id: 457, name: Gamepad, quantity: 3;
+June 21, 2019 12:42 PM: action: change, id: 457, name: Gamepad, quantity: 2;
+June 21, 2019 12:42 PM: action: del, id: 457, name: Gamepad, quantity: 1;
+June 21, 2019 12:42 PM: action: add, id: 124, name: Keyboard, quantity: 1;
+June 21, 2019 12:42 PM: action: add, id: 123, name: Ноутбук, quantity: 1;
+June 21, 2019 12:42 PM: action: add, id: 457, name: Gamepad, quantity: 1;
+June 21, 2019 12:42 PM: action: change, id: 457, name: Gamepad, quantity: 1;
+June 21, 2019 12:42 PM: action: add, id: 456, name: Мышка, quantity: 1;
