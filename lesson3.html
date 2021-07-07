@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="ajax-data"></div>
+<button class="ajax-get">Async get data</button>
+<script>
+
+    // JSON
+
+    // let userJson = '{"name": "Anna", "age": 25, "isAdmin": true}';
+    // // console.log(userJson);
+    //
+    // let user = JSON.parse(userJson);
+    // // console.log(user);
+    //
+    // user.dateCreate = '2019-06-04';
+    //
+    // user.address = {
+    //     city: 'Saint Peterburg',
+    //     postalCode: 199999
+    // };
+    //
+    // // console.log(user);
+    //
+    // let jsonUser = JSON.stringify(user, ['name', 'dateCreate', 'address', 'city', 'postalCode'], 4);
+    //
+    // // console.log(jsonUser);
+    //
+    // let user1 = JSON.parse(jsonUser, (key, value) => {
+    //     // console.log(key, value);
+    //     if (key === 'dateCreate') {
+    //         value = new Date(value)
+    //     }
+    //     return value;
+    // });
+    //
+    // console.log(user1);
+
+
+    // Callback
+
+    // let num = (a, cb) => {
+    //     setTimeout(() => {
+    //         const b = a + 10;
+    //         cb(b);
+    //     }, 300)
+    // };
+    //
+    // num(5, (x) => {
+    //     console.log(x);
+    // })
+
+    // Promise
+
+    // let num2 = a => {
+    //     return new Promise((resolve, reject) => {
+    //         setTimeout(() => {
+    //             if(a){
+    //                 const b = a + 10;
+    //                 resolve(b)
+    //             } else {
+    //                 reject('Error!!!');
+    //             }
+    //
+    //         }, 300)
+    //     })
+    // };
+    //
+    // num2(10)
+    //     .then((data) => {
+    //         console.log(data);
+    //     })
+    //     .catch((error) => {
+    //         console.log(error)
+    //     });
+    //
+    //
+    // num2()
+    //     .then((data) => {
+    //         console.log(data);
+    //     })
+    //     .catch((error) => {
+    //         console.log(error)
+    //     });
+
+
+
+
+    window.onload = () => {
+        document.querySelector('.ajax-get').addEventListener('click', () => {
+
+            // XHR
+
+            // let xhr = new XMLHttpRequest();
+            // xhr.open('GET', 'tel.json', true); // false - синхронный запрос
+            //
+            // xhr.onreadystatechange = () => {
+            //     console.log(xhr.readyState);
+            //
+            //     // 0 - запрос не инициализирован
+            //     // 1 - загрузка данных
+            //     // 2 - запрос принят сервером
+            //     // 3 - идет обмен данными
+            //     // 4 - запрос окончен
+            //     if(xhr.readyState !== 4) {
+            //         return
+            //     }
+            //     if (xhr.status !== 200) {
+            //         console.log(`Error ${xhr.status} ${xhr.statusText}`);
+            //     } else {
+            //         console.log(`ok ${xhr.responseText}`);
+            //         let data = JSON.parse(xhr.responseText);
+            //         let block = document.querySelector('.ajax-data');
+            //         block.innerHTML = `Phone ${data.tel} (${data.name})`;
+            //     }
+            // };
+
+            // xhr.send();
+
+            // fetch
+
+            // let block = document.querySelector('.ajax-data');
+            //
+            // fetch('tel.json')
+            //     .then((result) => {
+            //         return result.json()
+            //     })
+            //     .then((data) => {
+            //         console.log(data);
+            //         block.innerHTML = `Phone ${data.tel} (${data.name})`;
+            //     })
+            //     .catch((error) => {
+            //         console.log(error);
+            //     })
+
+        })
+    }
+
+
+
+</script>
+</body>
+</html>

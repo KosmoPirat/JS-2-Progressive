@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Shop</title>
+</head>
+<body>
+
+
+<div id="app" class="vue-container">
+    <header class="header">
+        <div class="logo">E-shop</div>
+        <filter-prod ref="filter"></filter-prod>
+        <cart ref="cart"></cart>
+    </header>
+    <main class="content">
+        <products ref="products"></products>
+        <errors ref="errors"></errors>
+    </main>
+
+
+    <footer class="footer">
+        <div class="logo">E-shop</div>
+        <form id="fb-form" action="#" method="post" class="feedback-form">
+            <div class="feedback-form__item feedback-title">Напишите нам!</div>
+            <div class="feedback-form__item item-wrap">
+                <label for="name-input" class="input-wrap">
+                    <input id="name-input" type="text" name="name" placeholder="Enter name"
+                           class="feedback-input">
+                </label>
+            </div>
+
+            <div class="feedback-form__item item-wrap">
+                <label for="phone-input" class="input-wrap">
+                    <input id="phone-input" type="text" name="phone" placeholder="Enter phone: +7(xxx)xxx-xxx"
+                           class="feedback-input">
+                </label>
+            </div>
+
+            <div class="feedback-form__item item-wrap">
+                <label for="mail-input" class="input-wrap">
+                    <input id="mail-input" type="text" name="email" placeholder="Enter mail: yourmail@mail.ru"
+                           class="feedback-input">
+                </label>
+            </div>
+
+            <div class="feedback-form__item item-wrap">
+                <label for="text-input" class="input-wrap" >
+                    <textarea id="text-input" name="text" placeholder="Enter message" class="feedback-textarea"></textarea>
+                </label>
+            </div>
+            <button class="feedback-form__submit btn" type="submit">
+                Отправить
+            </button>
+        </form>
+    </footer>
+</div>
+<script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/ServerErrorComponent.js"></script>
+<script src="js/CartComponent.js"></script>
+<script src="js/ProdComponent.js"></script>
+<script src="js/FilterComponent.js"></script>
+<script src="js/main.js"></script>
+<script src="js/validation.js"></script>
+<script>
+    window.onload = () => {
+        document.getElementById('fb-form').addEventListener('submit', e => {
+            let valid = new Validator('fb-form');
+            if(!valid.valid) {
+                e.preventDefault();
+            }
+        })
+    }
+</script>
+</body>
+</html>
